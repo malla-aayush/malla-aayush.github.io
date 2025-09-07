@@ -72,9 +72,9 @@ export function useScrollNavigation(
       const scrollingElement = document.scrollingElement || document.documentElement;
       const { scrollTop, scrollHeight, clientHeight } = scrollingElement;
       
-      // Strict boundary detection
-      const isAtTop = scrollTop <= 0;
-      const isAtBottom = Math.abs(scrollHeight - scrollTop - clientHeight) <= 1;
+      // Slightly more lenient boundary detection
+      const isAtTop = scrollTop <= 5; // Allow a small margin at the top
+      const isAtBottom = Math.abs(scrollHeight - scrollTop - clientHeight) <= 5; // Allow a small margin at the bottom
 
       console.log('Touch Debug:', {
         touchDiff,
@@ -90,20 +90,17 @@ export function useScrollNavigation(
       if (Math.abs(touchDiff) >= minSwipeDistance) {
         const isSwipingUp = touchDiff > 0;
         const isSwipingDown = touchDiff < 0;
-
-        // Check if we're on the home page by looking for specific elements
         const isHomePage = document.querySelector('[data-section="home"]') !== null;
-        
-        // On home page, allow swipe up anywhere
-        if (isHomePage && isSwipingUp) {
-          e.preventDefault();
-          touchRef.current.lastNavigationTime = now;
-          onNavigate('down');
-          return;
-        }
 
-        // For other pages, only navigate at boundaries
-        if ((isSwipingUp && isAtBottom) || (isSwipingDown && isAtTop)) {
+        // Navigation conditions:
+        // 1. On home page: allow swipe up anywhere
+        // 2. At the bottom of any page: allow swipe up
+        // 3. At the top of any page: allow swipe down
+        const shouldNavigate = 
+          (isSwipingUp && (isHomePage || isAtBottom)) || // Navigate down on swipe up
+          (isSwipingDown && isAtTop); // Navigate up on swipe down
+
+        if (shouldNavigate && !touchRef.current.isScrolling) {
           e.preventDefault();
           touchRef.current.lastNavigationTime = now;
           onNavigate(isSwipingUp ? 'down' : 'up');
