@@ -28,10 +28,10 @@ export default function MobileNavigation({ activeSection, sections, onNavigate }
                 onNavigate(sections[currentIndex - 1])
               }
             }}
-            className="p-3 bg-[#0B1121]/80 backdrop-blur-sm border border-gray-800/50 rounded-xl hover:bg-[#00E5FF]/20 hover:border-[#00E5FF]/50 transition-all duration-300"
+            className="text-gray-400/90 hover:text-cyan-400 transition-colors duration-300"
             aria-label="Previous section"
           >
-            <ChevronUp className="w-5 h-5 text-gray-400 group-hover:text-[#00E5FF]" />
+            <ChevronUp className="w-8 h-8" strokeWidth={1.5} />
           </button>
         </div>
       )}
@@ -48,10 +48,10 @@ export default function MobileNavigation({ activeSection, sections, onNavigate }
                 onNavigate(sections[currentIndex + 1])
               }
             }}
-            className="p-3 bg-[#0B1121]/80 backdrop-blur-sm border border-gray-800/50 rounded-xl hover:bg-[#00E5FF]/20 hover:border-[#00E5FF]/50 transition-all duration-300"
+            className="text-gray-400/90 hover:text-cyan-400 transition-colors duration-300"
             aria-label="Next section"
           >
-            <ChevronDown className="w-5 h-5 text-gray-400 group-hover:text-[#00E5FF]" />
+            <ChevronDown className="w-8 h-8" strokeWidth={1.5} />
           </button>
         </div>
       )}
