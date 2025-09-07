@@ -4,50 +4,97 @@ import { useEffect, useRef } from 'react';
 
 type NavigationDirection = 'up' | 'down';
 
-interface ScrollRef {
-  lastScrollTop: number;
-  scrollTimeout: NodeJS.Timeout | null;
+interface TouchRef {
+  startY: number;
+  lastNavigationTime: number;
   isScrolling: boolean;
-  lastWheelTime: number;
+  scrollTimeout: NodeJS.Timeout | null;
 }
 
 export function useScrollNavigation(
   onNavigate: (direction: NavigationDirection) => void,
   isEnabled: boolean = true
 ) {
-  const scrollRef = useRef<ScrollRef>({
-    lastScrollTop: 0,
-    scrollTimeout: null,
+  const touchRef = useRef<TouchRef>({
+    startY: 0,
+    lastNavigationTime: 0,
     isScrolling: false,
-    lastWheelTime: 0,
+    scrollTimeout: null
   });
 
   useEffect(() => {
     if (!isEnabled) return;
 
-    let touchStartY = 0;
-
     const handleTouchStart = (e: TouchEvent) => {
-      touchStartY = e.touches[0].clientY;
+      touchRef.current.startY = e.touches[0].clientY;
+      touchRef.current.isScrolling = false;
+      if (touchRef.current.scrollTimeout) {
+        clearTimeout(touchRef.current.scrollTimeout);
+      }
+    };
+
+    const handleTouchMove = (e: TouchEvent) => {
+      const scrollingElement = document.scrollingElement || document.documentElement;
+      const { scrollTop, scrollHeight, clientHeight } = scrollingElement;
+      const touchDiff = touchRef.current.startY - e.touches[0].clientY;
+      
+      const isAtTop = scrollTop <= 0;
+      const isAtBottom = Math.abs(scrollHeight - scrollTop - clientHeight) <= 1;
+
+      // Prevent default only at boundaries to allow normal scrolling elsewhere
+      if ((isAtTop && touchDiff < 0) || (isAtBottom && touchDiff > 0)) {
+        e.preventDefault();
+      }
+    };
+
+    const handleScroll = () => {
+      touchRef.current.isScrolling = true;
+      if (touchRef.current.scrollTimeout) {
+        clearTimeout(touchRef.current.scrollTimeout);
+      }
+      touchRef.current.scrollTimeout = setTimeout(() => {
+        touchRef.current.isScrolling = false;
+      }, 150);
     };
 
     const handleTouchEnd = (e: TouchEvent) => {
+      const now = Date.now();
       const touchEndY = e.changedTouches[0].clientY;
-      const touchDiff = touchStartY - touchEndY;
-      const minSwipeDistance = 50; // Reduced minimum swipe distance
+      const touchDiff = touchRef.current.startY - touchEndY;
+      const minSwipeDistance = 60;
+      const cooldownPeriod = 500;
 
+      // Don't handle navigation if we're still in cooldown or if the user was scrolling
+      if (now - touchRef.current.lastNavigationTime < cooldownPeriod || touchRef.current.isScrolling) {
+        return;
+      }
+
+      const scrollingElement = document.scrollingElement || document.documentElement;
+      const { scrollTop, scrollHeight, clientHeight } = scrollingElement;
+      
+      // Strict boundary detection
+      const isAtTop = scrollTop <= 0;
+      const isAtBottom = Math.abs(scrollHeight - scrollTop - clientHeight) <= 1;
+
+      console.log('Touch Debug:', {
+        touchDiff,
+        isAtTop,
+        isAtBottom,
+        scrollTop,
+        scrollHeight,
+        clientHeight,
+        isScrolling: touchRef.current.isScrolling
+      });
+
+      // Only navigate if we have a significant swipe and we're at a boundary
       if (Math.abs(touchDiff) >= minSwipeDistance) {
-        const scrollingElement = document.scrollingElement || document.documentElement;
-        const { scrollTop, scrollHeight, clientHeight } = scrollingElement;
-        
-        // Simple boundary detection
-        const isAtBottom = Math.abs(scrollHeight - scrollTop - clientHeight) < 5;
-        const isAtTop = scrollTop < 5;
+        const isSwipingUp = touchDiff > 0;
+        const isSwipingDown = touchDiff < 0;
 
-        // Navigate if we're at the boundaries
-        if ((touchDiff > 0 && isAtBottom) || (touchDiff < 0 && isAtTop)) {
+        if ((isSwipingUp && isAtBottom) || (isSwipingDown && isAtTop)) {
           e.preventDefault();
-          onNavigate(touchDiff > 0 ? 'down' : 'up');
+          touchRef.current.lastNavigationTime = now;
+          onNavigate(isSwipingUp ? 'down' : 'up');
         }
       }
     };
@@ -55,52 +102,36 @@ export function useScrollNavigation(
     const handleWheel = (e: WheelEvent) => {
       const scrollingElement = document.scrollingElement || document.documentElement;
       const { scrollTop, scrollHeight, clientHeight } = scrollingElement;
-      const isAtBottom = Math.abs(scrollHeight - scrollTop - clientHeight) < 5;
-      const isAtTop = scrollTop < 5;
+      const isAtBottom = Math.abs(scrollHeight - scrollTop - clientHeight) <= 1;
+      const isAtTop = scrollTop <= 0;
       const now = Date.now();
 
-      // Simple debounce for wheel events
-      if (now - scrollRef.current.lastWheelTime < 500) {
+      // Prevent rapid successive wheel events
+      if (now - touchRef.current.lastNavigationTime < 500) {
         return;
       }
 
-      // Navigate at boundaries
       if ((isAtBottom && e.deltaY > 0) || (isAtTop && e.deltaY < 0)) {
         e.preventDefault();
-        scrollRef.current.lastWheelTime = now;
+        touchRef.current.lastNavigationTime = now;
         onNavigate(e.deltaY > 0 ? 'down' : 'up');
       }
     };
 
-    const handleScroll = () => {
-      if (scrollRef.current.scrollTimeout) {
-        clearTimeout(scrollRef.current.scrollTimeout);
-      }
-
-      scrollRef.current.isScrolling = true;
-
-      // Use a longer timeout to ensure we capture the end of momentum scrolling
-      scrollRef.current.scrollTimeout = setTimeout(() => {
-        scrollRef.current.isScrolling = false;
-        
-        // Store last scroll position for reference
-        const scrollingElement = document.scrollingElement || document.documentElement;
-        scrollRef.current.lastScrollTop = scrollingElement.scrollTop;
-      }, 150);
-    };
-
     document.addEventListener('wheel', handleWheel, { passive: false });
     document.addEventListener('touchstart', handleTouchStart, { passive: true });
+    document.addEventListener('touchmove', handleTouchMove, { passive: false });
     document.addEventListener('touchend', handleTouchEnd, { passive: false });
     document.addEventListener('scroll', handleScroll, { passive: true });
 
     return () => {
       document.removeEventListener('wheel', handleWheel);
       document.removeEventListener('touchstart', handleTouchStart);
+      document.removeEventListener('touchmove', handleTouchMove);
       document.removeEventListener('touchend', handleTouchEnd);
       document.removeEventListener('scroll', handleScroll);
-      if (scrollRef.current.scrollTimeout) {
-        clearTimeout(scrollRef.current.scrollTimeout);
+      if (touchRef.current.scrollTimeout) {
+        clearTimeout(touchRef.current.scrollTimeout);
       }
     };
   }, [isEnabled, onNavigate]);
