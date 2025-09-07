@@ -46,6 +46,32 @@ interface MainContentProps {
   onSectionChange?: (section: string) => void
 }
 
+// Navigation buttons for desktop view
+function DesktopNavigationButtons({ isHomePage }: { isHomePage: boolean }) {
+  if (!isHomePage) return null;
+  
+  return (
+    <div className="fixed hidden md:flex space-x-4 bottom-8 right-8 z-50">
+      <Button
+        variant="outline"
+        size="icon"
+        className="bg-background/80 backdrop-blur-sm hover:bg-cyan-400/20 border-cyan-400/50 hover:border-cyan-400/70"
+        onClick={() => window.history.back()}
+      >
+        <ChevronLeft className="h-6 w-6" />
+      </Button>
+      <Button
+        variant="outline"
+        size="icon"
+        className="bg-background/80 backdrop-blur-sm hover:bg-cyan-400/20 border-cyan-400/50 hover:border-cyan-400/70"
+        onClick={() => window.history.forward()}
+      >
+        <ChevronRight className="h-6 w-6" />
+      </Button>
+    </div>
+  );
+}
+
 const ModernGridPattern = () => {
   return (
     <div className="absolute inset-0 opacity-[0.03]">
@@ -163,6 +189,8 @@ export function MainContent({ onSectionChange }: MainContentProps) {
     return () => clearInterval(timer)
   }, [currentTitle])
 
+  const isHomePage = true; // Since this is the home page component
+
   return (
     <div data-section="home" className="flex-1 relative bg-gradient-to-br from-slate-950 via-gray-900 to-slate-900 overflow-hidden h-screen flex items-center justify-center">
       <div className="absolute inset-0">
@@ -170,6 +198,7 @@ export function MainContent({ onSectionChange }: MainContentProps) {
         <div className="absolute inset-0 bg-gradient-to-t from-gray-900/60 via-transparent to-gray-900/20" />
       </div>
 
+      <DesktopNavigationButtons isHomePage={isHomePage} />
       <ModernGridPattern />
 
       <GeometricElement className="w-96 h-96 -top-48 -left-48" delay={0} />

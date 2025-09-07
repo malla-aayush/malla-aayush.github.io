@@ -120,8 +120,10 @@ export function useScrollNavigation(
         let shouldNavigate = false;
 
         if (homePage) {
-          // On home page, allow swipe up anywhere
-          shouldNavigate = isSwipingUp;
+          // On home page, allow swipe in both directions
+          if (isSwipingUp || (isSwipingDown && isAtTop)) {
+            shouldNavigate = true;
+          }
         } else {
           // On other pages
           // Allow navigation in both directions when at boundaries
