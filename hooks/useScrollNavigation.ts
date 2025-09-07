@@ -7,6 +7,7 @@ type NavigationDirection = 'up' | 'down';
 interface TouchRef {
   startY: number;
   lastNavigationTime: number;
+  lastScrollTime: number;
   isScrolling: boolean;
   scrollTimeout: NodeJS.Timeout | null;
 }
@@ -18,6 +19,7 @@ export function useScrollNavigation(
   const touchRef = useRef<TouchRef>({
     startY: 0,
     lastNavigationTime: 0,
+    lastScrollTime: 0,
     isScrolling: false,
     scrollTimeout: null
   });
@@ -80,9 +82,11 @@ export function useScrollNavigation(
       const scrollingElement = document.scrollingElement || document.documentElement;
       const { scrollTop, scrollHeight, clientHeight } = scrollingElement;
       
-      // More precise boundary detection
-      const isAtTop = scrollTop <= 2;
-      const isAtBottom = scrollHeight - scrollTop - clientHeight <= 2;
+      // More lenient boundary detection for mobile
+      const topThreshold = 10; // pixels from top
+      const bottomThreshold = 10; // pixels from bottom
+      const isAtTop = scrollTop <= topThreshold;
+      const isAtBottom = Math.abs(scrollHeight - scrollTop - clientHeight) <= bottomThreshold;
       const isSwipingUp = touchDiff > 0;
       const isSwipingDown = touchDiff < 0;
       const hasSignificantSwipe = Math.abs(touchDiff) >= minSwipeDistance;
@@ -97,16 +101,22 @@ export function useScrollNavigation(
         scrollTop,
         scrollHeight,
         clientHeight,
+        touchDiff,
         isScrolling: touchRef.current.isScrolling
       });
 
-      // Don't handle navigation if we're still in cooldown or if the user was scrolling
-      if (now - touchRef.current.lastNavigationTime < cooldownPeriod || touchRef.current.isScrolling) {
+      // Reset scrolling state if enough time has passed
+      if (now - touchRef.current.lastScrollTime > cooldownPeriod) {
+        touchRef.current.isScrolling = false;
+      }
+
+      // Don't handle navigation if we're still in cooldown
+      if (now - touchRef.current.lastNavigationTime < cooldownPeriod) {
         return;
       }
 
       // Handle navigation
-      if (hasSignificantSwipe && !touchRef.current.isScrolling) {
+      if (hasSignificantSwipe) {
         let shouldNavigate = false;
 
         if (homePage) {
@@ -115,10 +125,8 @@ export function useScrollNavigation(
         } else {
           // On other pages
           // Allow navigation in both directions when at boundaries
-          if (isAtBottom && isSwipingUp) {
-            shouldNavigate = true;
-          }
-          if (isAtTop && isSwipingDown) {
+          // Removed the isScrolling check to make it more responsive
+          if ((isAtBottom && isSwipingUp) || (isAtTop && isSwipingDown)) {
             shouldNavigate = true;
           }
         }
