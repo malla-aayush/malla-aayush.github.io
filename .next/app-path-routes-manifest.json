@@ -1,0 +1,6 @@
+{
+  "/api/download-cv/route": "/api/download-cv",
+  "/_not-found/page": "/_not-found",
+  "/icon.jpg/route": "/icon.jpg",
+  "/page": "/"
+}

@@ -10,12 +10,28 @@ import { PortfolioSection } from "../components/portfolio-section"
 import { ContactSection } from "../components/contact-section"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import MobileNavigation from "../components/mobile-navigation"
+import { ScrollIndicator } from "../components/scroll-indicator"
 
 function HomePage() {
   const [activeSection, setActiveSection] = useState("home")
   const [isTransitioning, setIsTransitioning] = useState(false)
+  const [showScrollIndicator, setShowScrollIndicator] = useState(true)
 
   const sections = ["home", "about", "resume", "portfolio", "contact"]
+
+  // Hide scroll indicator when user scrolls
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 10) {
+        setShowScrollIndicator(false);
+      } else {
+        setShowScrollIndicator(true);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const handleSectionChange = useCallback(
     (newSection: string) => {
@@ -121,6 +137,14 @@ function HomePage() {
             }`}
           />
           <div className="relative z-10 min-h-screen">{renderSection}</div>
+
+          {/* Scroll Indicator */}
+          {activeSection === "home" && showScrollIndicator && (
+            <ScrollIndicator 
+              onClick={() => handleSectionChange("about")}
+              className="md:hidden" // Only show on mobile
+            />
+          )}
 
           {/* Mobile Navigation */}
           <MobileNavigation 

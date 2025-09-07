@@ -1,11 +1,120 @@
 {
   "version": 4,
-  "routes": {},
+  "routes": {
+    "/_not-found": {
+      "initialStatus": 404,
+      "experimentalBypassFor": [
+        {
+          "type": "header",
+          "key": "next-action"
+        },
+        {
+          "type": "header",
+          "key": "content-type",
+          "value": "multipart/form-data;.*"
+        }
+      ],
+      "initialRevalidateSeconds": false,
+      "srcRoute": "/_not-found",
+      "dataRoute": "/_not-found.rsc",
+      "allowHeader": [
+        "host",
+        "x-matched-path",
+        "x-prerender-revalidate",
+        "x-prerender-revalidate-if-generated",
+        "x-next-revalidated-tags",
+        "x-next-revalidate-tag-token"
+      ]
+    },
+    "/api/download-cv": {
+      "initialHeaders": {
+        "content-disposition": "attachment; filename=\"Aayush_Malla_CV.pdf\"",
+        "content-length": "196670",
+        "content-type": "application/pdf",
+        "x-next-cache-tags": "_N_T_/layout,_N_T_/api/layout,_N_T_/api/download-cv/layout,_N_T_/api/download-cv/route,_N_T_/api/download-cv/"
+      },
+      "experimentalBypassFor": [
+        {
+          "type": "header",
+          "key": "next-action"
+        },
+        {
+          "type": "header",
+          "key": "content-type",
+          "value": "multipart/form-data;.*"
+        }
+      ],
+      "initialRevalidateSeconds": false,
+      "srcRoute": "/api/download-cv",
+      "dataRoute": null,
+      "allowHeader": [
+        "host",
+        "x-matched-path",
+        "x-prerender-revalidate",
+        "x-prerender-revalidate-if-generated",
+        "x-next-revalidated-tags",
+        "x-next-revalidate-tag-token"
+      ]
+    },
+    "/icon.jpg": {
+      "initialHeaders": {
+        "cache-control": "public, immutable, no-transform, max-age=31536000",
+        "content-type": "image/jpeg",
+        "x-next-cache-tags": "_N_T_/layout,_N_T_/icon.jpg/layout,_N_T_/icon.jpg/route,_N_T_/icon.jpg/"
+      },
+      "experimentalBypassFor": [
+        {
+          "type": "header",
+          "key": "next-action"
+        },
+        {
+          "type": "header",
+          "key": "content-type",
+          "value": "multipart/form-data;.*"
+        }
+      ],
+      "initialRevalidateSeconds": false,
+      "srcRoute": "/icon.jpg",
+      "dataRoute": null,
+      "allowHeader": [
+        "host",
+        "x-matched-path",
+        "x-prerender-revalidate",
+        "x-prerender-revalidate-if-generated",
+        "x-next-revalidated-tags",
+        "x-next-revalidate-tag-token"
+      ]
+    },
+    "/": {
+      "experimentalBypassFor": [
+        {
+          "type": "header",
+          "key": "next-action"
+        },
+        {
+          "type": "header",
+          "key": "content-type",
+          "value": "multipart/form-data;.*"
+        }
+      ],
+      "initialRevalidateSeconds": false,
+      "srcRoute": "/",
+      "dataRoute": "/index.rsc",
+      "allowHeader": [
+        "host",
+        "x-matched-path",
+        "x-prerender-revalidate",
+        "x-prerender-revalidate-if-generated",
+        "x-next-revalidated-tags",
+        "x-next-revalidate-tag-token"
+      ]
+    }
+  },
   "dynamicRoutes": {},
   "notFoundRoutes": [],
   "preview": {
-    "previewModeId": "ef19e9a05099b57c0a47f2c15def9326",
-    "previewModeSigningKey": "ed5f536fd82d30c48be2f8f3543264567a0bca28580f2810c89c9dd0eae9e768",
-    "previewModeEncryptionKey": "431b7b5ef96787f3c17a9844d641b3343c555061de6df0bf5ab72ce9b94cfba6"
+    "previewModeId": "37aa47f81270c2efb0821d250660efa0",
+    "previewModeSigningKey": "abd4688913c3fd8d7c90d20da3f9c0be17b28c7c74dba65e8cafed274f7b8fbd",
+    "previewModeEncryptionKey": "408ed73cbe37d52cdd8243592cef8fe833640520ad66979b6873d1acc6066a62"
   }
 }
