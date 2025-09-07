@@ -86,11 +86,23 @@ export function useScrollNavigation(
         isScrolling: touchRef.current.isScrolling
       });
 
-      // Only navigate if we have a significant swipe and we're at a boundary
+      // Only navigate if we have a significant swipe
       if (Math.abs(touchDiff) >= minSwipeDistance) {
         const isSwipingUp = touchDiff > 0;
         const isSwipingDown = touchDiff < 0;
 
+        // Check if we're on the home page by looking for specific elements
+        const isHomePage = document.querySelector('[data-section="home"]') !== null;
+        
+        // On home page, allow swipe up anywhere
+        if (isHomePage && isSwipingUp) {
+          e.preventDefault();
+          touchRef.current.lastNavigationTime = now;
+          onNavigate('down');
+          return;
+        }
+
+        // For other pages, only navigate at boundaries
         if ((isSwipingUp && isAtBottom) || (isSwipingDown && isAtTop)) {
           e.preventDefault();
           touchRef.current.lastNavigationTime = now;
