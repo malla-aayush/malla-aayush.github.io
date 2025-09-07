@@ -64,20 +64,34 @@ export function useScrollNavigation(
       const minSwipeDistance = 60;
       const cooldownPeriod = 500;
 
-      // Don't handle navigation if we're still in cooldown or if the user was scrolling
-      if (now - touchRef.current.lastNavigationTime < cooldownPeriod || touchRef.current.isScrolling) {
-        return;
-      }
+      // Get current section
+      const homePage = document.querySelector('[data-section="home"]') !== null;
+      const aboutPage = document.querySelector('[data-section="about"]') !== null;
+      const resumePage = document.querySelector('[data-section="resume"]') !== null;
+      const portfolioPage = document.querySelector('[data-section="portfolio"]') !== null;
+      const contactPage = document.querySelector('[data-section="contact"]') !== null;
+      
+      const currentPage = homePage ? 'home' : 
+                         aboutPage ? 'about' :
+                         resumePage ? 'resume' :
+                         portfolioPage ? 'portfolio' :
+                         contactPage ? 'contact' : 'unknown';
 
       const scrollingElement = document.scrollingElement || document.documentElement;
       const { scrollTop, scrollHeight, clientHeight } = scrollingElement;
       
-      // Slightly more lenient boundary detection
-      const isAtTop = scrollTop <= 5; // Allow a small margin at the top
-      const isAtBottom = Math.abs(scrollHeight - scrollTop - clientHeight) <= 5; // Allow a small margin at the bottom
+      // More precise boundary detection
+      const isAtTop = scrollTop <= 2;
+      const isAtBottom = scrollHeight - scrollTop - clientHeight <= 2;
+      const isSwipingUp = touchDiff > 0;
+      const isSwipingDown = touchDiff < 0;
+      const hasSignificantSwipe = Math.abs(touchDiff) >= minSwipeDistance;
 
-      console.log('Touch Debug:', {
-        touchDiff,
+      // Debug information
+      console.log('Touch Navigation Debug:', {
+        page: currentPage,
+        swipeDirection: isSwipingUp ? 'up' : 'down',
+        swipeDistance: Math.abs(touchDiff),
         isAtTop,
         isAtBottom,
         scrollTop,
@@ -86,24 +100,34 @@ export function useScrollNavigation(
         isScrolling: touchRef.current.isScrolling
       });
 
-      // Only navigate if we have a significant swipe
-      if (Math.abs(touchDiff) >= minSwipeDistance) {
-        const isSwipingUp = touchDiff > 0;
-        const isSwipingDown = touchDiff < 0;
-        const isHomePage = document.querySelector('[data-section="home"]') !== null;
+      // Don't handle navigation if we're still in cooldown or if the user was scrolling
+      if (now - touchRef.current.lastNavigationTime < cooldownPeriod || touchRef.current.isScrolling) {
+        return;
+      }
 
-        // Navigation conditions:
-        // 1. On home page: allow swipe up anywhere
-        // 2. At the bottom of any page: allow swipe up
-        // 3. At the top of any page: allow swipe down
-        const shouldNavigate = 
-          (isSwipingUp && (isHomePage || isAtBottom)) || // Navigate down on swipe up
-          (isSwipingDown && isAtTop); // Navigate up on swipe down
+      // Handle navigation
+      if (hasSignificantSwipe && !touchRef.current.isScrolling) {
+        let shouldNavigate = false;
 
-        if (shouldNavigate && !touchRef.current.isScrolling) {
+        if (homePage) {
+          // On home page, allow swipe up anywhere
+          shouldNavigate = isSwipingUp;
+        } else {
+          // On other pages
+          // Allow navigation in both directions when at boundaries
+          if (isAtBottom && isSwipingUp) {
+            shouldNavigate = true;
+          }
+          if (isAtTop && isSwipingDown) {
+            shouldNavigate = true;
+          }
+        }
+
+        if (shouldNavigate) {
           e.preventDefault();
           touchRef.current.lastNavigationTime = now;
           onNavigate(isSwipingUp ? 'down' : 'up');
+          console.log('Navigating:', isSwipingUp ? 'down' : 'up');
         }
       }
     };
