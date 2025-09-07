@@ -4,7 +4,7 @@
 
 import React, { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
-import { ChevronLeft, ChevronRight, Github, Linkedin, Mail } from "lucide-react"
+import { Github, Linkedin, Mail, ChevronLeft, ChevronRight } from "lucide-react"
 import { useScrollNavigation } from "@/hooks/useScrollNavigation"
 
 // Mobile Download CV Button with info message
@@ -51,18 +51,18 @@ function DesktopNavigationButtons({ isHomePage, onSectionChange }: { isHomePage:
   if (!isHomePage) return null;
   
   return (
-    <div className="fixed hidden md:flex items-center space-x-8 bottom-8 right-8 z-50">
+    <div className="fixed hidden md:flex flex-col gap-8 right-8 top-1/2 -translate-y-1/2 z-50">
       <div
         onClick={() => onSectionChange?.('contact')}
-        className="cursor-pointer text-gray-400/90 hover:text-cyan-400 transition-colors duration-200"
+        className="w-12 h-12 rounded-lg flex items-center justify-center cursor-pointer bg-gray-900/60 backdrop-blur-sm hover:bg-gray-800/70 border border-white/10 transition-all duration-300"
       >
-        <ChevronLeft className="w-8 h-8" strokeWidth={1.5} />
+        <ChevronLeft className="w-6 h-6 text-gray-400/90 hover:text-cyan-400" strokeWidth={1.5} />
       </div>
       <div
         onClick={() => onSectionChange?.('about')}
-        className="cursor-pointer text-gray-400/90 hover:text-cyan-400 transition-colors duration-200"
+        className="w-12 h-12 rounded-lg flex items-center justify-center cursor-pointer bg-gray-900/60 backdrop-blur-sm hover:bg-gray-800/70 border border-white/10 transition-all duration-300"
       >
-        <ChevronRight className="w-8 h-8" strokeWidth={1.5} />
+        <ChevronRight className="w-6 h-6 text-gray-400/90 hover:text-cyan-400" strokeWidth={1.5} />
       </div>
     </div>
   );

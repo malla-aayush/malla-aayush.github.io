@@ -89,25 +89,25 @@ export function AboutSection() {
           </div>
 
           {/* Personal Info */}
-          <div className="space-y-4">
-            <div className="flex justify-between">
-              <span className="text-cyan-400 font-medium">Age</span>
+          <div className="space-y-6">
+            <div className="grid grid-cols-[120px_1fr] items-center">
+              <span className="text-cyan-400">Age</span>
               <span className="text-gray-300">26</span>
             </div>
-            <div className="flex justify-between">
-              <span className="text-cyan-400 font-medium">Residence</span>
+            <div className="grid grid-cols-[120px_1fr] items-center">
+              <span className="text-cyan-400">Residence</span>
               <span className="text-gray-300">Nepal</span>
             </div>
-            <div className="flex justify-between">
-              <span className="text-cyan-400 font-medium">Address</span>
+            <div className="grid grid-cols-[120px_1fr] items-center">
+              <span className="text-cyan-400">Address</span>
               <span className="text-gray-300">Kathmandu, Nepal</span>
             </div>
-            <div className="flex justify-between">
-              <span className="text-cyan-400 font-medium">e-mail</span>
+            <div className="grid grid-cols-[120px_1fr] items-center">
+              <span className="text-cyan-400">e-mail</span>
               <span className="text-gray-300">mallaaayush59@gmail.com</span>
             </div>
-            <div className="flex justify-between">
-              <span className="text-cyan-400 font-medium">Phone</span>
+            <div className="grid grid-cols-[120px_1fr] items-center">
+              <span className="text-cyan-400">Phone</span>
               <span className="text-gray-300">+977 9851203045</span>
             </div>
           </div>

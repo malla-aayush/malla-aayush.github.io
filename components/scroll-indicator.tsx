@@ -26,3 +26,4 @@ export function ScrollIndicator({ onClick, className, direction = 'down' }: Scro
     </div>
   );
 }
+}
