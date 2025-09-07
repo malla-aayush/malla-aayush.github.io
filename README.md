@@ -1,30 +1,80 @@
-# v0v0cvwebsiteclonewebsitemainfi
+# Portfolio Website
 
-*Automatically synced with your [v0.app](https://v0.app) deployments*
+This is a modern portfolio website built with Next.js, utilizing the App Router and styled with Tailwind CSS. The site is automatically deployed to GitHub Pages through GitHub Actions.
 
-[![Deployed on Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?style=for-the-badge&logo=vercel)](https://vercel.com/aayushmalla-7035s-projects/v0-v0v0cvwebsiteclonewebsitemainfi)
-[![Built with v0](https://img.shields.io/badge/Built%20with-v0.app-black?style=for-the-badge)](https://v0.app/chat/projects/nZM1Vqio4NC)
+## 🚀 Features
 
-## Overview
+- Modern, responsive design
+- Dark/Light mode support
+- Sections for About, Experience, Skills, Portfolio, and Contact
+- Automated deployment to GitHub Pages
+- Built with Next.js 14 and TypeScript
+- Styled using Tailwind CSS and shadcn/ui components
 
-This repository will stay in sync with your deployed chats on [v0.app](https://v0.app).
-Any changes you make to your deployed app will be automatically pushed to this repository from [v0.app](https://v0.app).
+## 🛠️ Tech Stack
 
-## Deployment
+- [Next.js](https://nextjs.org/) - React framework
+- [TypeScript](https://www.typescriptlang.org/) - Type safety
+- [Tailwind CSS](https://tailwindcss.com/) - Styling
+- [shadcn/ui](https://ui.shadcn.com/) - UI components
+- [Framer Motion](https://www.framer.com/motion/) - Animations
+- [PNPM](https://pnpm.io/) - Package manager
 
-Your project is live at:
+## 💻 Local Development
 
-**[https://vercel.com/aayushmalla-7035s-projects/v0-v0v0cvwebsiteclonewebsitemainfi](https://vercel.com/aayushmalla-7035s-projects/v0-v0v0cvwebsiteclonewebsitemainfi)**
+### Prerequisites
 
-## Build your app
+- Node.js (v20 or later)
+- PNPM (v9 or later)
 
-Continue building your app on:
+### Setting Up Locally
 
-**[https://v0.app/chat/projects/nZM1Vqio4NC](https://v0.app/chat/projects/nZM1Vqio4NC)**
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/malla-aayush/malla-aayush.github.io.git
+   cd malla-aayush.github.io
+   ```
 
-## How It Works
+2. Install dependencies:
+   ```bash
+   pnpm install
+   ```
 
-1. Create and modify your project using [v0.app](https://v0.app)
-2. Deploy your chats from the v0 interface
-3. Changes are automatically pushed to this repository
-4. Vercel deploys the latest version from this repository
+3. Start the development server:
+   ```bash
+   pnpm dev
+   ```
+
+4. Open [http://localhost:3000](http://localhost:3000) in your browser to see the result.
+
+### Building for Production
+
+To create a production build:
+
+```bash
+pnpm build
+```
+
+The static output will be generated in the `out` directory.
+
+## 🚀 Deployment
+
+This site is automatically deployed to GitHub Pages when changes are pushed to the main branch. The deployment process:
+
+1. Builds the Next.js application
+2. Generates static files
+3. Deploys to GitHub Pages
+
+You can monitor the deployment status in the Actions tab of the repository.
+
+## 📝 Making Changes
+
+1. Create a new branch for your changes
+2. Make your changes
+3. Test locally using `pnpm dev`
+4. Commit and push your changes
+5. Create a Pull Request to the main branch
+
+## 📄 License
+
+This project is open source and available under the MIT License.
