@@ -51,23 +51,19 @@ function DesktopNavigationButtons({ isHomePage, onSectionChange }: { isHomePage:
   if (!isHomePage) return null;
   
   return (
-    <div className="fixed hidden md:flex space-x-4 bottom-8 right-8 z-50">
-      <Button
-        variant="outline"
-        size="icon"
-        className="text-gray-400/90 hover:text-cyan-400 transition-colors duration-200"
+    <div className="fixed hidden md:flex items-center space-x-8 bottom-8 right-8 z-50">
+      <div
         onClick={() => onSectionChange?.('contact')}
+        className="cursor-pointer text-gray-400/90 hover:text-cyan-400 transition-colors duration-200"
       >
-        <ChevronLeft className="h-6 w-6" strokeWidth={1.5} />
-      </Button>
-      <Button
-        variant="outline"
-        size="icon"
-        className="text-gray-400/90 hover:text-cyan-400 transition-colors duration-200"
+        <ChevronLeft className="w-8 h-8" strokeWidth={1.5} />
+      </div>
+      <div
         onClick={() => onSectionChange?.('about')}
+        className="cursor-pointer text-gray-400/90 hover:text-cyan-400 transition-colors duration-200"
       >
-        <ChevronRight className="h-6 w-6" strokeWidth={1.5} />
-      </Button>
+        <ChevronRight className="w-8 h-8" strokeWidth={1.5} />
+      </div>
     </div>
   );
 }

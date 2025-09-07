@@ -15,14 +15,14 @@ export function ScrollIndicator({ onClick, className, direction = 'down' }: Scro
       className={cn(
         "fixed left-1/2 -translate-x-1/2 cursor-pointer animate-bounce",
         direction === 'up' ? "top-16 sm:top-8" : "bottom-16 sm:bottom-8",
-        "z-50 w-8 h-8 flex items-center justify-center",
+        "z-50 flex items-center justify-center",
         "text-gray-400/90 hover:text-cyan-400",
-        "transition-colors duration-200",
+        "transition-colors duration-300",
         className
       )}
       onClick={onClick}
     >
-      <Icon className="w-8 h-8" strokeWidth={1.5} />
+      <Icon className="w-10 h-10" strokeWidth={1} />
     </div>
   );
 }
