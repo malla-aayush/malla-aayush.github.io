@@ -47,7 +47,7 @@ interface MainContentProps {
 }
 
 // Navigation buttons for desktop view
-function DesktopNavigationButtons({ isHomePage }: { isHomePage: boolean }) {
+function DesktopNavigationButtons({ isHomePage, onSectionChange }: { isHomePage: boolean, onSectionChange?: (section: string) => void }) {
   if (!isHomePage) return null;
   
   return (
@@ -55,18 +55,18 @@ function DesktopNavigationButtons({ isHomePage }: { isHomePage: boolean }) {
       <Button
         variant="outline"
         size="icon"
-        className="bg-background/80 backdrop-blur-sm hover:bg-cyan-400/20 border-cyan-400/50 hover:border-cyan-400/70"
-        onClick={() => window.history.back()}
+        className="text-gray-400/90 hover:text-cyan-400 transition-colors duration-200"
+        onClick={() => onSectionChange?.('contact')}
       >
-        <ChevronLeft className="h-6 w-6" />
+        <ChevronLeft className="h-6 w-6" strokeWidth={1.5} />
       </Button>
       <Button
         variant="outline"
         size="icon"
-        className="bg-background/80 backdrop-blur-sm hover:bg-cyan-400/20 border-cyan-400/50 hover:border-cyan-400/70"
-        onClick={() => window.history.forward()}
+        className="text-gray-400/90 hover:text-cyan-400 transition-colors duration-200"
+        onClick={() => onSectionChange?.('about')}
       >
-        <ChevronRight className="h-6 w-6" />
+        <ChevronRight className="h-6 w-6" strokeWidth={1.5} />
       </Button>
     </div>
   );
@@ -198,7 +198,7 @@ export function MainContent({ onSectionChange }: MainContentProps) {
         <div className="absolute inset-0 bg-gradient-to-t from-gray-900/60 via-transparent to-gray-900/20" />
       </div>
 
-      <DesktopNavigationButtons isHomePage={isHomePage} />
+      <DesktopNavigationButtons isHomePage={isHomePage} onSectionChange={onSectionChange} />
       <ModernGridPattern />
 
       <GeometricElement className="w-96 h-96 -top-48 -left-48" delay={0} />
