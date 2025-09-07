@@ -35,55 +35,82 @@ export function useScrollNavigation(
     const handleTouchEnd = (e: TouchEvent) => {
       touchEndY = e.changedTouches[0].clientY;
       const now = Date.now();
-
-      // Prevent rapid successive touch events
-      if (now - scrollRef.current.lastWheelTime < 500) {
-        return;
-      }
-
       const touchDiff = touchStartY - touchEndY;
       const minSwipeDistance = 50; // minimum distance for swipe
+      const scrollingElement = document.scrollingElement || document.documentElement;
+      const { scrollTop, scrollHeight, clientHeight } = scrollingElement;
+      
+      // Calculate exact scroll positions
+      const isAtBottom = Math.abs(scrollHeight - scrollTop - clientHeight) < 1;
+      const isAtTop = scrollTop <= 0;
+      const isScrollingPossible = scrollHeight > clientHeight;
 
-      if (Math.abs(touchDiff) >= minSwipeDistance) {
-        const scrollingElement = document.scrollingElement || document.documentElement;
-        const { scrollTop, scrollHeight, clientHeight } = scrollingElement;
-        const isAtBottom = Math.abs(scrollHeight - scrollTop - clientHeight) < 2;
-        const isAtTop = scrollTop < 2;
+      // Check if we're in a mobile viewport
+      const isMobile = window.innerWidth <= 768;
 
-        // Only navigate if at the top or bottom
-        if ((touchDiff > 0 && isAtBottom) || (touchDiff < 0 && isAtTop)) {
+      if (!isMobile || !isScrollingPossible) {
+        // On desktop or when scrolling isn't possible, use normal navigation
+        if (Math.abs(touchDiff) >= minSwipeDistance && now - scrollRef.current.lastWheelTime >= 500) {
           scrollRef.current.lastWheelTime = now;
           onNavigate(touchDiff > 0 ? 'down' : 'up');
         }
+        return;
+      }
+
+      // On mobile with scrollable content
+      if (Math.abs(touchDiff) >= minSwipeDistance) {
+        // Check if we should navigate or allow normal scroll
+        const shouldNavigateDown = touchDiff > 0 && isAtBottom;
+        const shouldNavigateUp = touchDiff < 0 && isAtTop;
+
+        if ((shouldNavigateDown || shouldNavigateUp) && now - scrollRef.current.lastWheelTime >= 500) {
+          e.preventDefault();
+          scrollRef.current.lastWheelTime = now;
+          onNavigate(touchDiff > 0 ? 'down' : 'up');
+        }
+        // If not at extremes, allow normal scroll behavior
       }
     };
 
     const handleWheel = (e: WheelEvent) => {
       const scrollingElement = document.scrollingElement || document.documentElement;
       const { scrollTop, scrollHeight, clientHeight } = scrollingElement;
-      const isAtBottom = Math.abs(scrollHeight - scrollTop - clientHeight) < 2;
-      const isAtTop = scrollTop < 2;
+      const isAtBottom = Math.abs(scrollHeight - scrollTop - clientHeight) < 1;
+      const isAtTop = scrollTop <= 0;
+      const isScrollingPossible = scrollHeight > clientHeight;
       const now = Date.now();
+      const isMobile = window.innerWidth <= 768;
       
       // Prevent rapid successive wheel events
       if (now - scrollRef.current.lastWheelTime < 500) {
         return;
       }
 
-      // Handle navigation at page extremes
+      // On mobile with scrollable content, only navigate at extremes
+      if (isMobile && isScrollingPossible) {
+        if ((isAtBottom && e.deltaY > 0) || (isAtTop && e.deltaY < 0)) {
+          e.preventDefault();
+          scrollRef.current.lastWheelTime = now;
+          
+          // Special handling for contact page
+          const isContactPage = document.querySelector('[data-section="contact"]') !== null;
+          
+          if (isAtBottom && isContactPage) {
+            // When at bottom of contact page, go to home
+            onNavigate('down'); // Using down to trigger the wrap-around logic
+          } else {
+            onNavigate(e.deltaY > 0 ? 'down' : 'up');
+          }
+        }
+        // Allow normal scroll behavior when not at extremes
+        return;
+      }
+
+      // On desktop or when content isn't scrollable, use normal navigation
       if ((isAtBottom && e.deltaY > 0) || (isAtTop && e.deltaY < 0)) {
         e.preventDefault();
         scrollRef.current.lastWheelTime = now;
-        
-        // Special handling for contact page
-        const isContactPage = document.querySelector('[data-section="contact"]') !== null;
-        
-        if (isAtBottom && isContactPage) {
-          // When at bottom of contact page, go to home
-          onNavigate('down'); // Using down to trigger the wrap-around logic
-        } else {
-          onNavigate(e.deltaY > 0 ? 'down' : 'up');
-        }
+        onNavigate(e.deltaY > 0 ? 'down' : 'up');
       }
     };
 
