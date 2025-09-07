@@ -51,7 +51,7 @@ function DesktopNavigationButtons({ isHomePage, onSectionChange }: { isHomePage:
   if (!isHomePage) return null;
   
   return (
-    <div className="fixed hidden md:flex flex-col gap-8 right-8 top-1/2 -translate-y-1/2 z-50">
+    <div className="fixed hidden md:flex flex-col gap-4 right-8 top-1/2 -translate-y-1/2 z-50">
       <div
         onClick={() => onSectionChange?.('contact')}
         className="w-12 h-12 rounded-lg flex items-center justify-center cursor-pointer bg-gray-900/60 backdrop-blur-sm hover:bg-gray-800/70 border border-white/10 transition-all duration-300"
