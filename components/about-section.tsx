@@ -82,7 +82,7 @@ export function AboutSection() {
           {/* Description */}
           <div className="lg:col-span-2">
             <p className="text-gray-300 leading-relaxed mb-8">
-              I'm a passionate Data Engineer with 3+ years of experience building scalable ETL pipelines and data
+              I'm a passionate Data Engineer with 5 years of experience building scalable ETL pipelines and data
               solutions. I specialize in Azure cloud technologies, PySpark, and machine learning applications with a
               focus on applying AI to study human decision making and create data-driven systems for real-world impact.
             </p>

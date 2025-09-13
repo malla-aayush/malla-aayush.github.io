@@ -3,6 +3,41 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* Hide default cursor */
+* {
+  cursor: none !important;
+}
+
+/* Custom cursor styles */
+.cursor-dot {
+  width: 6px;
+  height: 6px;
+  background-color: white;
+  position: fixed;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+}
+
+.cursor-outline {
+  width: 28px;
+  height: 28px;
+  border: 1.5px solid rgba(255, 255, 255, 0.5);
+  position: fixed;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  transition: all 0.08s ease-out;
+  transform: translate(-50%, -50%);
+}
+
+.cursor-hover {
+  transform: translate(-50%, -50%) scale(1.2);
+  background-color: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
 :root {
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);

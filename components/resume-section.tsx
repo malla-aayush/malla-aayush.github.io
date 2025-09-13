@@ -58,14 +58,19 @@ export function ResumeSection() {
     },
   ]
 
-  const allSkills = [
+  // Programming Languages
+  const languageSkills = [
     { name: "Python (4+ years)", icon: Code },
     { name: "SQL (5+ years)", icon: Database },
-    { name: "PySpark", icon: Code },
     { name: "JavaScript", icon: Code },
     { name: "Node.js", icon: Code },
     { name: "PostgreSQL", icon: Database },
     { name: "MySQL/MSSQL", icon: Database },
+  ]
+
+  // Frameworks and Libraries
+  const frameworkSkills = [
+    { name: "PySpark", icon: Code },
     { name: "Flask", icon: Code },
     { name: "Pandas", icon: Code },
     { name: "NumPy", icon: Code },
@@ -80,12 +85,18 @@ export function ResumeSection() {
     { name: "AWS (S3, Glue, Athena)", icon: Cloud },
     { name: "Azure (ADF, ADLS, Synapse)", icon: Cloud },
     { name: "GCP (BigQuery, Cloud Storage)", icon: Cloud },
-    { name: "Apache Airflow", icon: Wrench },
+    { name: "Apache Airflow", icon: Cloud },
     { name: "Databricks", icon: Database },
     { name: "Delta Live Tables", icon: Database },
   ]
 
-  const knowledgeAreas = ["Machine Learning", "Deep Learning", "Generative AI", "DevOps"]
+  const knowledgeAreas = [
+    "Machine Learning", 
+    "Deep Learning", 
+    "Computer Vision",
+    "Generative AI",
+    "DevOps"
+  ]
 
   return (
     <div data-section="resume" className="flex-1 relative bg-gray-800 text-white overflow-y-auto">
@@ -187,60 +198,88 @@ export function ResumeSection() {
               <h3 className="text-xl font-bold mb-4 font-poppins">
                 Skills<span className="text-cyan-400">.</span>
               </h3>
-              <div className="grid grid-cols-2 gap-2">
-                {allSkills.map((skill, index) => {
-                  const IconComponent = skill.icon
-                  return (
-                    <div
+              {/* Programming Languages */}
+              <div className="mb-6">
+                <h4 className="text-lg font-semibold mb-3">
+                  Languages<span className="text-cyan-400">.</span>
+                </h4>
+                <div className="grid grid-cols-2 gap-2">
+                  {languageSkills.map((skill, index) => {
+                    const IconComponent = skill.icon
+                    return (
+                      <div
+                        key={`lang-${index}`}
+                        className="flex items-center gap-2 bg-gray-700/30 border border-gray-600/50 rounded px-3 py-2 hover:bg-gray-700/50 hover:border-cyan-400/30 transition-all duration-300"
+                        style={{ animationDelay: `${index * 0.05}s` }}
+                      >
+                        <IconComponent className="w-4 h-4 text-cyan-400" />
+                        <span className="text-sm">{skill.name}</span>
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
+
+              {/* Frameworks */}
+              <div className="mb-6">
+                <h4 className="text-lg font-semibold mb-3">
+                  Frameworks<span className="text-cyan-400">.</span>
+                </h4>
+                <div className="grid grid-cols-2 gap-2">
+                  {frameworkSkills.map((skill, index) => {
+                    const IconComponent = skill.icon
+                    return (
+                      <div
+                        key={`framework-${index}`}
+                        className="flex items-center gap-2 bg-gray-700/30 border border-gray-600/50 rounded px-3 py-2 hover:bg-gray-700/50 hover:border-cyan-400/30 transition-all duration-300"
+                        style={{ animationDelay: `${index * 0.05}s` }}
+                      >
+                        <IconComponent className="w-4 h-4 text-cyan-400" />
+                        <span className="text-sm">{skill.name}</span>
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
+
+              {/* Cloud Technologies */}
+              <div className="mb-8">
+                <h3 className="text-xl font-bold mb-4 font-poppins">
+                  Cloud <span className="text-cyan-400">Tech</span>
+                </h3>
+                <div className="grid grid-cols-1 gap-2">
+                  {cloudSkills.map((skill, index) => {
+                    const IconComponent = skill.icon
+                    return (
+                      <div
+                        key={index}
+                        className="bg-gray-700 rounded-md p-2 hover:bg-gray-600 transition-all duration-300 animate-fade-in-up flex items-center gap-2"
+                        style={{ animationDelay: `${(index + 20) * 0.05}s` }}
+                      >
+                        <IconComponent className="w-4 h-4 text-cyan-400" />
+                        <span className="text-white font-medium text-xs">{skill.name}</span>
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
+
+              {/* Knowledge */}
+              <div>
+                <h3 className="text-xl font-bold mb-4 font-poppins">
+                  Knowledge<span className="text-cyan-400">.</span>
+                </h3>
+                <div className="flex flex-wrap gap-2">
+                  {knowledgeAreas.map((skill, index) => (
+                    <span
                       key={index}
-                      className="bg-gray-700 rounded-md p-2 hover:bg-gray-600 transition-all duration-300 animate-fade-in-up flex items-center gap-1"
+                      className="bg-gray-700 text-white px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-600 transition-colors duration-300 animate-fade-in-up"
                       style={{ animationDelay: `${index * 0.05}s` }}
                     >
-                      <IconComponent className="w-3 h-3 text-cyan-400 flex-shrink-0" />
-                      <span className="text-white font-medium text-xs">{skill.name}</span>
-                    </div>
-                  )
-                })}
-              </div>
-            </div>
-
-            {/* Cloud Technologies */}
-            <div className="mb-8">
-              <h3 className="text-xl font-bold mb-4 font-poppins">
-                Cloud <span className="text-cyan-400">Tech</span>
-              </h3>
-              <div className="grid grid-cols-1 gap-2">
-                {cloudSkills.map((skill, index) => {
-                  const IconComponent = skill.icon
-                  return (
-                    <div
-                      key={index}
-                      className="bg-gray-700 rounded-md p-2 hover:bg-gray-600 transition-all duration-300 animate-fade-in-up flex items-center gap-2"
-                      style={{ animationDelay: `${(index + 20) * 0.05}s` }}
-                    >
-                      <IconComponent className="w-4 h-4 text-cyan-400" />
-                      <span className="text-white font-medium text-xs">{skill.name}</span>
-                    </div>
-                  )
-                })}
-              </div>
-            </div>
-
-            {/* Knowledge */}
-            <div>
-              <h3 className="text-xl font-bold mb-4 font-poppins">
-                Knowledge<span className="text-cyan-400">.</span>
-              </h3>
-              <div className="flex flex-wrap gap-2">
-                {knowledgeAreas.map((skill, index) => (
-                  <span
-                    key={index}
-                    className="bg-gray-700 text-white px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-600 transition-colors duration-300 animate-fade-in-up"
-                    style={{ animationDelay: `${index * 0.05}s` }}
-                  >
-                    {skill}
-                  </span>
-                ))}
+                      {skill}
+                    </span>
+                  ))}
+                </div>
               </div>
             </div>
           </div>

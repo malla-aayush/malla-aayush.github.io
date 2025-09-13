@@ -1,29 +1,53 @@
 "use client"
 
 import { useState } from "react"
-import { ExternalLink, Brain, BarChart3, MapPin, GraduationCap, ChevronDown, ChevronUp } from "lucide-react"
+import { ExternalLink, Brain, BarChart3, MapPin, GraduationCap, ChevronDown, ChevronUp, Eye, Camera } from "lucide-react"
 
 export function PortfolioSection() {
   const [activeFilter, setActiveFilter] = useState("All")
   const [showAll, setShowAll] = useState(false)
 
-  const filters = ["All", "Machine Learning", "Web Development", "Data Engineering", "Mobile Apps"]
+  const filters = ["All", "Machine Learning", "Computer Vision", "Web Development", "Data Engineering", "Mobile Apps"]
 
   const projects = [
     {
       id: 1,
-      title: "Nepali License Plate Recognition",
+      title: "ML Tool Suite (MCP)",
       category: "Machine Learning",
-      year: "2020",
+      year: "2023",
       icon: Brain,
       gradient: "from-purple-500 to-pink-500",
       description:
-        "Machine learning system to detect and extract Nepali license plate numbers with 95% accuracy using SVM and OpenCV.",
-      technologies: ["Python", "OpenCV", "SVM", "Image Processing"],
-      githubUrl: "https://github.com/aayushmalla13/Nepali-License-Plate-Recognition",
+        "Research-grade NLP toolkit featuring RAG-based Q&A, TextRank summarization, ML-powered sentiment analysis, and language translation. Deployed as both Streamlit app and MCP server.",
+      technologies: ["Python", "NLP", "RAG", "MCP", "Streamlit"],
+      features: [
+        "Document Q&A with BM25 and MMR",
+        "Graph-based text summarization",
+        "Auto-learning sentiment analysis",
+        "Offline/Online translation"
+      ],
+      githubUrl: "https://github.com/aayushmalla13/ML-Tool-Suite-MCP-/security",
     },
     {
       id: 2,
+      title: "Nepali License Plate Recognition",
+      category: "Computer Vision",
+      year: "2020",
+      icon: Eye,
+      gradient: "from-sky-500 to-blue-600",
+      description:
+        "Machine learning system to detect and extract Nepali license plate numbers with 95% accuracy using SVM and OpenCV.",
+      technologies: ["Python", "OpenCV", "SVM", "Image Processing"],
+      features: [
+        "Real-time plate detection",
+        "Character segmentation",
+        "95% recognition accuracy",
+        "Support for multiple fonts"
+      ],
+      githubUrl: "https://github.com/aayushmalla13/Nepali-License-Plate-Recognition",
+    },
+    {
+      id: 3,
       title: "Retail Data Analysis",
       category: "Data Engineering",
       year: "2022",
@@ -32,9 +56,15 @@ export function PortfolioSection() {
       description:
         "Analyzed multi-million row retail datasets using Apache Spark to uncover seasonal trends and performance insights.",
       technologies: ["Apache Spark", "PySpark", "SQL", "DataFrames"],
+      features: [
+        "Multi-million row processing",
+        "Seasonal trend analysis",
+        "Performance optimization",
+        "Interactive dashboards"
+      ],
     },
     {
-      id: 3,
+      id: 4,
       title: "Xplore Nepal",
       category: "Mobile Apps",
       year: "2019",
@@ -43,10 +73,16 @@ export function PortfolioSection() {
       description:
         "Android tourism app for Nepal featuring local areas, restaurants, heritage sites, and guide booking functionality.",
       technologies: ["Java", "Android Studio", "Google Maps API"],
+      features: [
+        "Interactive maps integration",
+        "Restaurant discovery",
+        "Heritage site guides",
+        "Local guide booking"
+      ],
       githubUrl: "https://github.com/aayushmalla13/Xplore-Nepal",
     },
     {
-      id: 4,
+      id: 5,
       title: "KU Digitized Wall",
       category: "Web Development",
       year: "2022",
@@ -55,6 +91,12 @@ export function PortfolioSection() {
       description:
         "Web application similar to Google Classroom for managing courses, assignments, and virtual classrooms.",
       technologies: ["JavaScript", "Node.js", "Express.js", "SQLite", "REST APIs"],
+      features: [
+        "Course management",
+        "Assignment tracking",
+        "Virtual classrooms",
+        "Real-time notifications"
+      ],
       githubUrl: "https://github.com/aayushmalla13/Digitized-Info-wall",
     },
   ]
@@ -62,7 +104,9 @@ export function PortfolioSection() {
   const filteredProjects =
     activeFilter === "All" ? projects : projects.filter((project) => project.category === activeFilter)
 
-  const displayedProjects = showAll ? filteredProjects : filteredProjects.slice(0, 4)
+  const displayedProjects = showAll
+    ? filteredProjects
+    : filteredProjects.slice(0, 6)
   const hasMoreProjects = filteredProjects.length > 4
 
   return (
@@ -94,48 +138,51 @@ export function PortfolioSection() {
         </div>
 
         {/* Projects Grid */}
-        <div className="grid md:grid-cols-2 gap-4">
+        <div className={`grid gap-4 ${
+          displayedProjects.length === 1 ? 'md:grid-cols-1 max-w-2xl mx-auto' :
+          displayedProjects.length === 2 ? 'md:grid-cols-2 max-w-4xl mx-auto' :
+          displayedProjects.length === 3 ? 'md:grid-cols-3' :
+          displayedProjects.length === 4 ? 'md:grid-cols-2 lg:grid-cols-2' :
+          'md:grid-cols-2 lg:grid-cols-3'
+        }`}>
           {displayedProjects.map((project) => {
             const IconComponent = project.icon
             return (
               <div
                 key={project.id}
-                className="group bg-gray-700 rounded-lg overflow-hidden hover:transform hover:scale-105 transition-all duration-300 animate-fade-in-up"
+                className="group bg-gray-700 rounded-lg overflow-hidden hover:transform hover:scale-102 transition-all duration-300 animate-fade-in-up"
               >
                 <div
-                  className={`aspect-[16/8] bg-gradient-to-br ${project.gradient} flex items-center justify-center relative overflow-hidden`}
+                  className={`aspect-[16/10] bg-gradient-to-br ${project.gradient} flex items-center justify-center relative overflow-hidden`}
                 >
                   <div className="absolute inset-0 bg-black/20"></div>
-                  <IconComponent className="w-16 h-16 text-white/90 z-10" />
-                  <div className="absolute top-4 right-4 z-10">
-                    <span className="bg-white/20 backdrop-blur-sm text-white px-3 py-1 rounded-full text-sm font-medium">
+                  <IconComponent className="w-12 h-12 text-white/90 z-10" />
+                  <div className="absolute top-3 right-3 z-10">
+                    <span className="bg-white/20 backdrop-blur-sm text-white px-2.5 py-0.5 rounded-full text-xs font-medium">
                       {project.category}
                     </span>
                   </div>
                   {/* Decorative elements */}
-                  <div className="absolute -top-10 -right-10 w-32 h-32 bg-white/10 rounded-full"></div>
-                  <div className="absolute -bottom-16 -left-16 w-40 h-40 bg-white/5 rounded-full"></div>
+                  <div className="absolute -top-8 -right-8 w-24 h-24 bg-white/10 rounded-full"></div>
+                  <div className="absolute -bottom-12 -left-12 w-32 h-32 bg-white/5 rounded-full"></div>
                 </div>
 
                 <div className="p-4">
                   <div className="flex items-center justify-between mb-2">
-                    <h3 className="text-lg font-semibold font-poppins">{project.title}</h3>
-                    <span className="text-cyan-400 text-sm font-medium">{project.year}</span>
-                  </div>
-                  <div className="mb-2">
-                    <span className="inline-block bg-cyan-400/20 text-cyan-400 px-2 py-1 rounded-full text-xs font-medium">
-                      {project.category}
-                    </span>
-                    {project.award && (
-                      <span className="inline-block bg-yellow-400/20 text-yellow-400 px-2 py-1 rounded-full text-xs font-medium ml-2">
-                        🏆 {project.award}
-                      </span>
-                    )}
+                    <h3 className="text-lg font-semibold font-poppins leading-tight">{project.title}</h3>
+                    <span className="text-cyan-400 text-xs font-medium">{project.year}</span>
                   </div>
                   <p className="text-gray-300 text-sm mb-3 leading-relaxed">{project.description}</p>
+                  {project.features && (
+                    <ul className="text-gray-300 text-sm mb-3 list-disc list-inside">
+                      {project.features.map((feature, index) => (
+                        <li key={index} className="text-xs leading-relaxed mb-1">{feature}</li>
+                      ))}
+                    </ul>
+                  )}
                   <div className="flex flex-wrap gap-1 mb-3">
                     {project.technologies.map((tech, index) => (
-                      <span key={index} className="bg-gray-600 text-gray-200 px-2 py-1 rounded text-xs">
+                      <span key={index} className="bg-gray-600 text-gray-200 px-1.5 py-0.5 rounded text-xs">
                         {tech}
                       </span>
                     ))}
@@ -165,22 +212,22 @@ export function PortfolioSection() {
         </div>
 
         {hasMoreProjects && (
-          <div className="flex justify-center mt-6">
+          <div className="flex justify-center mt-12">
             <button
               onClick={() => setShowAll(!showAll)}
-              className="flex items-center gap-2 bg-cyan-400 text-gray-900 px-6 py-2 rounded-full font-medium hover:bg-cyan-300 transition-colors"
+              className="group relative px-8 py-3 border border-gray-600 hover:border-cyan-400 rounded-lg transition-colors duration-300"
             >
-              {showAll ? (
-                <>
-                  <ChevronUp className="w-4 h-4" />
-                  Show Less
-                </>
-              ) : (
-                <>
-                  <ChevronDown className="w-4 h-4" />
-                  See More Projects
-                </>
-              )}
+              <div className="flex items-center gap-3 text-gray-300 group-hover:text-cyan-400 transition-colors duration-300">
+                <span className="text-sm font-medium tracking-wide">
+                  {showAll ? 'Show Less' : 'View More Projects'}
+                </span>
+                {showAll ? (
+                  <ChevronUp className="w-4 h-4 transition-transform duration-300 group-hover:-translate-y-0.5" />
+                ) : (
+                  <ChevronDown className="w-4 h-4 transition-transform duration-300 group-hover:translate-y-0.5" />
+                )}
+              </div>
+              <div className="absolute inset-0 -z-10 bg-gray-700/50 rounded-lg transform scale-95 opacity-0 group-hover:scale-100 group-hover:opacity-100 transition-all duration-300"></div>
             </button>
           </div>
         )}
