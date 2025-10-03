@@ -1,4 +1,4 @@
-// File: /home/fm-pc-lt-241/Videos/malla-aayush.github.io/app/layout.tsx
+// File: /home/fm-pc-lt-241/Documents/malla-aayush.github.io/app/layout.tsx
 import * as entry from '../../../app/layout.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

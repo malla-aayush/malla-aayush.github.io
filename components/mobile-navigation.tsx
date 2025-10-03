@@ -31,7 +31,7 @@ export default function MobileNavigation({ activeSection, sections, onNavigate }
             className="text-gray-400/90 hover:text-cyan-400 transition-colors duration-300"
             aria-label="Previous section"
           >
-            <ChevronUp className="w-8 h-8" strokeWidth={1.5} />
+            <ChevronUp className="w-8 h-8 text-white hover:text-cyan-400" strokeWidth={1.5} />
           </button>
         </div>
       )}
@@ -51,7 +51,7 @@ export default function MobileNavigation({ activeSection, sections, onNavigate }
             className="text-gray-400/90 hover:text-cyan-400 transition-colors duration-300"
             aria-label="Next section"
           >
-            <ChevronDown className="w-8 h-8" strokeWidth={1.5} />
+            <ChevronDown className="w-8 h-8 text-white hover:text-cyan-400" strokeWidth={1.5} />
           </button>
         </div>
       )}

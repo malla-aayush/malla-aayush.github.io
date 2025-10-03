@@ -63,8 +63,8 @@ export function useScrollNavigation(
       const now = Date.now();
       const touchEndY = e.changedTouches[0].clientY;
       const touchDiff = touchRef.current.startY - touchEndY;
-      const minSwipeDistance = 60;
-      const cooldownPeriod = 500;
+      const minSwipeDistance = 150; // Increased minimum swipe distance
+      const cooldownPeriod = 1000; // Increased cooldown to 1 second
 
       // Get current section
       const homePage = document.querySelector('[data-section="home"]') !== null;
@@ -83,10 +83,15 @@ export function useScrollNavigation(
       const { scrollTop, scrollHeight, clientHeight } = scrollingElement;
       
       // More lenient boundary detection for mobile
-      const topThreshold = 10; // pixels from top
-      const bottomThreshold = 10; // pixels from bottom
+      const topThreshold = 50; // pixels from top
+      const bottomThreshold = 50; // pixels from bottom
       const isAtTop = scrollTop <= topThreshold;
       const isAtBottom = Math.abs(scrollHeight - scrollTop - clientHeight) <= bottomThreshold;
+      
+      // Additional check to ensure scrolling has completely stopped
+      if (touchRef.current.isScrolling) {
+        return;
+      }
       const isSwipingUp = touchDiff > 0;
       const isSwipingDown = touchDiff < 0;
       const hasSignificantSwipe = Math.abs(touchDiff) >= minSwipeDistance;
@@ -149,8 +154,18 @@ export function useScrollNavigation(
       const isAtTop = scrollTop <= 0;
       const now = Date.now();
 
-      // Prevent rapid successive wheel events
-      if (now - touchRef.current.lastNavigationTime < 500) {
+      // Prevent rapid successive wheel events with longer cooldown
+      if (now - touchRef.current.lastNavigationTime < 1000) {
+        return;
+      }
+
+      // Require more significant wheel movement
+      if (Math.abs(e.deltaY) < 100) {
+        return;
+      }
+
+      // Add additional check for scroll momentum
+      if (Date.now() - touchRef.current.lastScrollTime < 300) {
         return;
       }
 

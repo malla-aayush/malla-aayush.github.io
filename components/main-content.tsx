@@ -48,6 +48,9 @@ interface MainContentProps {
 
 // Navigation buttons for desktop view
 function DesktopNavigationButtons({ isHomePage, onSectionChange }: { isHomePage: boolean, onSectionChange?: (section: string) => void }) {
+  // Set default text color to white for navigation buttons
+  const buttonClass = "text-white hover:text-cyan-400 transition-colors";
+
   if (!isHomePage) return null;
   
   return (
@@ -56,13 +59,13 @@ function DesktopNavigationButtons({ isHomePage, onSectionChange }: { isHomePage:
         onClick={() => onSectionChange?.('contact')}
         className="w-12 h-12 rounded-lg flex items-center justify-center cursor-pointer bg-gray-900/60 backdrop-blur-sm hover:bg-gray-800/70 border border-white/10 transition-all duration-300"
       >
-        <ChevronLeft className="w-6 h-6 text-gray-400/90 hover:text-cyan-400" strokeWidth={1.5} />
+        <ChevronLeft className="w-6 h-6 text-white hover:text-cyan-400" strokeWidth={1.5} />
       </div>
       <div
         onClick={() => onSectionChange?.('about')}
         className="w-12 h-12 rounded-lg flex items-center justify-center cursor-pointer bg-gray-900/60 backdrop-blur-sm hover:bg-gray-800/70 border border-white/10 transition-all duration-300"
       >
-        <ChevronRight className="w-6 h-6 text-gray-400/90 hover:text-cyan-400" strokeWidth={1.5} />
+        <ChevronRight className="w-6 h-6 text-white hover:text-cyan-400" strokeWidth={1.5} />
       </div>
     </div>
   );

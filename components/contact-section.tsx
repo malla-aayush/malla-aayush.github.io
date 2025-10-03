@@ -63,14 +63,14 @@ export function ContactSection({ onSectionChange }: ContactSectionProps) {
           className="w-12 h-12 bg-gray-800/80 backdrop-blur-sm border border-gray-600 rounded-lg flex items-center justify-center text-gray-400 hover:text-cyan-400 hover:border-cyan-400 transition-all duration-300 hover:scale-110"
           aria-label="Go to portfolio"
         >
-          <ChevronLeft size={20} />
+          <ChevronLeft size={20} className="text-white hover:text-cyan-400" />
         </button>
         <button
           onClick={() => onSectionChange?.("home")}
           className="w-12 h-12 bg-gray-800/80 backdrop-blur-sm border border-gray-600 rounded-lg flex items-center justify-center text-gray-400 hover:text-cyan-400 hover:border-cyan-400 transition-all duration-300 hover:scale-110"
           aria-label="Go to home"
         >
-          <ChevronRight size={20} />
+          <ChevronRight size={20} className="text-white hover:text-cyan-400" />
         </button>
       </div>
 

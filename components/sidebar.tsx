@@ -19,11 +19,11 @@ export function Sidebar({ activeSection, onSectionChange }: SidebarProps) {
 
   return (
     // Hide sidebar on mobile, show on md and larger screens
-    <div className="hidden md:flex w-80 bg-gradient-to-b from-slate-950 via-gray-900 to-slate-900 text-white flex-col items-center py-8 px-6 relative border-r border-white/10">
+    <div className="hidden md:flex w-80 bg-gradient-to-b from-slate-950 via-gray-900 to-slate-900 text-white flex-col items-center pt-8 px-6 relative border-r border-white/10">
       <div className="absolute inset-0 bg-gradient-to-b from-gray-900/20 via-transparent to-gray-900/40" />
 
       <div className="flex flex-col items-center mb-8 relative z-10">
-        <div className="w-32 h-32 rounded-full bg-gradient-to-br from-cyan-400/20 to-blue-500/20 p-1 mb-6 backdrop-blur-sm">
+        <div className="w-40 h-40 rounded-full bg-gradient-to-br from-cyan-400/20 to-blue-500/20 p-1 mb-6 backdrop-blur-sm">
           <div className="w-full h-full rounded-full bg-white p-1">
             <img src="/aayush_linkedin.jpg" alt="Aayush Malla" className="w-full h-full rounded-full object-cover" />
           </div>
@@ -97,7 +97,7 @@ export function Sidebar({ activeSection, onSectionChange }: SidebarProps) {
         </ul>
       </nav>
 
-      <div className="mt-auto text-center relative z-10">
+      <div className="mt-auto pt-8 pb-4 text-center relative z-10 w-full border-t border-white/10">
         <p className="text-gray-400 text-xs">© 2025 All rights reserved.</p>
       </div>
     </div>

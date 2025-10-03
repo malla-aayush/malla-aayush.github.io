@@ -3,9 +3,77 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/* Hide default cursor */
+/* Reset cursor styles */
 * {
-  cursor: none !important;
+  cursor: default !important;
+}
+
+/* Add background effect when hovering over clickable elements */
+a, button, [role="button"] {
+  position: relative;
+  cursor: pointer !important;
+  overflow: hidden;
+  color: inherit;
+}
+
+/* Create a background glow effect that follows cursor */
+a:hover, button:hover, [role="button"]:hover {
+  background: radial-gradient(
+    circle at var(--x, 50%) var(--y, 50%),
+    rgba(255, 255, 255, 0.15) 0%,
+    rgba(255, 255, 255, 0.05) 25%,
+    transparent 50%
+  );
+  transition: all 0.2s ease;
+  color: inherit !important;
+}
+
+/* Ensure text remains visible on dark backgrounds */
+.dark a:hover, .dark button:hover, .dark [role="button"]:hover {
+  color: white !important;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+}
+
+/* Background effect for interactive elements */
+.cursor-trail {
+  pointer-events: none;
+  position: fixed;
+  width: 20px;
+  height: 20px;
+  z-index: 9998;
+  left: 0;
+  top: 0;
+  will-change: transform;
+  transition: all 0.15s ease-out;
+  background: radial-gradient(
+    circle at center,
+    rgba(255, 255, 255, 0.15) 0%,
+    rgba(255, 255, 255, 0.05) 50%,
+    transparent 70%
+  );
+  mix-blend-mode: screen;
+  filter: blur(0.5px);
+  border-radius: 50%;
+  opacity: 0.8;
+}
+
+/* Hover effect enhancement */
+.cursor-trail.hovering {
+  width: 35px;
+  height: 35px;
+  opacity: 1;
+  background: radial-gradient(
+    circle at center,
+    rgba(255, 255, 255, 0.2) 0%,
+    rgba(255, 255, 255, 0.1) 50%,
+    transparent 70%
+  );
+  filter: blur(1px);
+}
+
+/* Reset cursor styles */
+* {
+  cursor: default !important;
 }
 
 /* Custom cursor styles */

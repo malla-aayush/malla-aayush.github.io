@@ -14,7 +14,7 @@ export function PortfolioSection() {
       id: 1,
       title: "ML Tool Suite (MCP)",
       category: "Machine Learning",
-      year: "2023",
+      year: "2025",
       icon: Brain,
       gradient: "from-purple-500 to-pink-500",
       description:
@@ -26,10 +26,67 @@ export function PortfolioSection() {
         "Auto-learning sentiment analysis",
         "Offline/Online translation"
       ],
-      githubUrl: "https://github.com/aayushmalla13/ML-Tool-Suite-MCP-/security",
+      githubUrl: "https://github.com/aayushmalla13/ML-Tool-Suite-MCP",
     },
     {
       id: 2,
+      title: "AirAware — Air Quality Nowcasting System",
+      category: "Machine Learning",
+      year: "2025",
+      icon: Brain,
+      gradient: "from-emerald-500 to-teal-500",
+      description:
+        "Production-grade air quality forecasting system with multi-model ensemble providing 6-24 hour PM2.5 predictions with calibrated uncertainty quantification and real-time nowcasting.",
+      technologies: ["Python 3.11", "FastAPI", "PyTorch", "Prophet", "Docker", "MLflow", "Redis"],
+      features: [
+        "Multi-model ensemble forecasting with uncertainty quantification",
+        "12-component modular architecture with intelligent agents",
+        "Real-time health advisories and alerts",
+        "Production-ready API and Streamlit UI",
+        "Automated system optimization and monitoring"
+      ],
+      githubUrl: "https://github.com/aayushmalla13/AirAware",
+    },
+    {
+      id: 3,
+      title: "NepaliGovRAGBench — Retrieval-Augmented QA",
+      category: "Machine Learning",
+      year: "2025",
+      icon: Brain,
+      gradient: "from-violet-500 to-purple-500",
+      description:
+        "End-to-end RAG system for Nepali government documents featuring multi-stage OCR, FAISS semantic search, and bilingual Nepali-English QA with citation support.",
+      technologies: ["Python 3.11", "FastAPI", "FAISS", "PaddleOCR", "MarianMT", "Docker", "MLflow"],
+      features: [
+        "12-phase modular pipeline with authority detection and document typing",
+        "Multi-stage OCR with PaddleOCR and Tesseract fallback",
+        "Production-ready Web UI + REST API with language routing",
+        "Containerized with Docker and comprehensive CI/CD",
+        "Authority filters and OCR quality gates for reliability"
+      ],
+      githubUrl: "https://github.com/aayushmalla13/NepaliGov-RAG-Bench",
+    },
+    {
+      id: 4,
+      title: "NEPSE-TSF — Stock Time-Series Forecasting",
+      category: "Machine Learning",
+      year: "2024",
+      icon: Brain,
+      gradient: "from-indigo-500 to-purple-500",
+      description:
+        "End-to-end NEPSE forecasting system with LightGBM point/quantile models and optional LSTM blending for next-close prediction and uncertainty intervals.",
+      technologies: ["Python 3.11", "LightGBM", "PyTorch", "scikit-learn", "Streamlit", "Docker"],
+      features: [
+        "Robust daily ingestion with live-to-historical fallbacks",
+        "Time-series cross-validation with Optuna tuning",
+        "CLI and Streamlit UI for user-friendly forecasting",
+        "Advanced feature engineering (RSI, MACD, ATR, Bollinger)",
+        "Containerized with comprehensive testing and docs"
+      ],
+      githubUrl: "https://github.com/aayushmalla13/stock-timeseries-forecast-nepse",
+    },
+    {
+      id: 5,
       title: "Nepali License Plate Recognition",
       category: "Computer Vision",
       year: "2020",
@@ -47,7 +104,7 @@ export function PortfolioSection() {
       githubUrl: "https://github.com/aayushmalla13/Nepali-License-Plate-Recognition",
     },
     {
-      id: 3,
+      id: 6,
       title: "Retail Data Analysis",
       category: "Data Engineering",
       year: "2022",
@@ -64,7 +121,7 @@ export function PortfolioSection() {
       ],
     },
     {
-      id: 4,
+      id: 7,
       title: "Xplore Nepal",
       category: "Mobile Apps",
       year: "2019",
@@ -82,7 +139,7 @@ export function PortfolioSection() {
       githubUrl: "https://github.com/aayushmalla13/Xplore-Nepal",
     },
     {
-      id: 5,
+      id: 8,
       title: "KU Digitized Wall",
       category: "Web Development",
       year: "2022",
@@ -138,19 +195,13 @@ export function PortfolioSection() {
         </div>
 
         {/* Projects Grid */}
-        <div className={`grid gap-4 ${
-          displayedProjects.length === 1 ? 'md:grid-cols-1 max-w-2xl mx-auto' :
-          displayedProjects.length === 2 ? 'md:grid-cols-2 max-w-4xl mx-auto' :
-          displayedProjects.length === 3 ? 'md:grid-cols-3' :
-          displayedProjects.length === 4 ? 'md:grid-cols-2 lg:grid-cols-2' :
-          'md:grid-cols-2 lg:grid-cols-3'
-        }`}>
+        <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
           {displayedProjects.map((project) => {
             const IconComponent = project.icon
             return (
               <div
                 key={project.id}
-                className="group bg-gray-700 rounded-lg overflow-hidden hover:transform hover:scale-102 transition-all duration-300 animate-fade-in-up"
+                className="group bg-gray-700 rounded-lg overflow-hidden hover:transform hover:scale-102 transition-all duration-300 animate-fade-in-up flex flex-col h-full"
               >
                 <div
                   className={`aspect-[16/10] bg-gradient-to-br ${project.gradient} flex items-center justify-center relative overflow-hidden`}
@@ -167,7 +218,7 @@ export function PortfolioSection() {
                   <div className="absolute -bottom-12 -left-12 w-32 h-32 bg-white/5 rounded-full"></div>
                 </div>
 
-                <div className="p-4">
+                <div className="p-4 flex flex-col flex-grow">
                   <div className="flex items-center justify-between mb-2">
                     <h3 className="text-lg font-semibold font-poppins leading-tight">{project.title}</h3>
                     <span className="text-cyan-400 text-xs font-medium">{project.year}</span>
@@ -187,7 +238,7 @@ export function PortfolioSection() {
                       </span>
                     ))}
                   </div>
-                  <div className="flex justify-center">
+                  <div className="flex justify-center mt-auto pt-4">
                     {project.githubUrl ? (
                       <a
                         href={project.githubUrl}
@@ -217,7 +268,7 @@ export function PortfolioSection() {
               onClick={() => setShowAll(!showAll)}
               className="group relative px-8 py-3 border border-gray-600 hover:border-cyan-400 rounded-lg transition-colors duration-300"
             >
-              <div className="flex items-center gap-3 text-gray-300 group-hover:text-cyan-400 transition-colors duration-300">
+              <div className="flex items-center gap-3 text-white group-hover:text-cyan-400 transition-colors duration-300">
                 <span className="text-sm font-medium tracking-wide">
                   {showAll ? 'Show Less' : 'View More Projects'}
                 </span>

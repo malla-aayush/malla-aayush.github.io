@@ -1,7 +1,6 @@
-import type React from "react"
 import type { Metadata } from "next"
 import { Inter, Poppins } from "next/font/google"
-import { CustomCursor } from "@/components/custom-cursor"
+import RootLayoutClient from './layout-client'
 import "./globals.css"
 
 const inter = Inter({
@@ -27,13 +26,11 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${inter.variable} ${poppins.variable} antialiased`}>
-      <body className="font-sans">
-        <CustomCursor />
-        <div className="relative">
-          {children}
-        </div>
-      </body>
-    </html>
+    <RootLayoutClient
+      interVariable={inter.variable}
+      poppinsVariable={poppins.variable}
+    >
+      {children}
+    </RootLayoutClient>
   )
 }

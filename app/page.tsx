@@ -165,7 +165,7 @@ function HomePage() {
               disabled={sections.indexOf(activeSection) === 0 || isTransitioning}
               className="w-12 h-12 bg-gray-800/80 backdrop-blur-sm border border-gray-700/50 rounded-xl flex items-center justify-center text-gray-400 hover:text-cyan-400 hover:border-cyan-400/50 transition-all duration-200 disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:text-gray-400 disabled:hover:border-gray-700/50"
             >
-              <ChevronLeft size={20} />
+              <ChevronLeft size={20} className="text-white hover:text-cyan-400" />
             </button>
 
             {/* Next Section Arrow */}
@@ -180,7 +180,7 @@ function HomePage() {
               disabled={isTransitioning}
               className="w-12 h-12 bg-gray-800/80 backdrop-blur-sm border border-gray-700/50 rounded-xl flex items-center justify-center text-gray-400 hover:text-cyan-400 hover:border-cyan-400/50 transition-all duration-200 disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:text-gray-400 disabled:hover:border-gray-700/50"
             >
-              <ChevronRight size={20} />
+              <ChevronRight size={20} className="text-white hover:text-cyan-400" />
             </button>
           </div>
         </div>
