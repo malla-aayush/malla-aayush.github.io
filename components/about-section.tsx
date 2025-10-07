@@ -31,39 +31,33 @@ export function AboutSection() {
   const researchInterests = [
     {
       icon: Brain,
-      title: "AI & Machine Learning",
-      description:
-        "Applying machine learning and generative AI to study human decision making and behavioral analytics for real-world impact.",
+      title: "AI / Machine Learning",
+      description: "Methods, applications, and foundations across modern AI and ML.",
     },
     {
       icon: Users,
-      title: "Human-Centered System Design",
-      description:
-        "Designing systems that prioritize user experience and human factors in technology implementation and interface design.",
+      title: "Human-Centered AI & Interaction",
+      description: "People-first AI systems: usability, transparency, feedback, and collaboration.",
     },
     {
       icon: Activity,
       title: "Behavioral Analytics",
-      description:
-        "Analyzing human behavior patterns through data to understand decision-making processes and improve system interactions.",
+      description: "Data-driven insights into behavior and interaction patterns.",
     },
     {
       icon: MapPin,
       title: "Geospatial Intelligence",
-      description:
-        "Leveraging geographic data and spatial analysis for location-based insights and intelligent mapping solutions.",
+      description: "Spatial analysis and location-aware modeling for decision support.",
+    },
+    {
+      icon: Brain,
+      title: "Trustworthy & Safe AI",
+      description: "Reliability, robustness, fairness, and accountability in AI.",
     },
     {
       icon: Heart,
       title: "Health Informatics",
-      description:
-        "Applying data science and technology solutions to healthcare challenges and medical data analysis for better patient outcomes.",
-    },
-    {
-      icon: Wheat,
-      title: "Agricultural Technology",
-      description:
-        "Exploring precision agriculture and smart farming solutions using IoT, machine learning, and data analytics to optimize crop yields and sustainable farming practices.",
+      description: "Data-driven methods for healthcare insights, decision support, and outcomes.",
     },
   ]
 
@@ -139,7 +133,7 @@ export function AboutSection() {
 
         <div>
           <h3 className="text-3xl font-bold mb-8 font-poppins">
-            Research <span className="text-cyan-400">Interest</span>
+            Research <span className="text-cyan-400">Interests</span>
           </h3>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {researchInterests.map((interest, index) => (
